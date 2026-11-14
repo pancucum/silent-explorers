@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Silent Explorers</title>
+<style>
+    body {
+        background-color: #050b18;
+       background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 150px;
+    }
+
+    h1 {
+        font-size: 55px;
+        letter-spacing: 6px;
+    }
+
+    h2 {
+        color: #64d8ff;
+        font-size: 28px;
+    }
+
+    p {
+        color: #aab8cc;
+        font-size: 18px;
+    }
+
+    button {
+        background: transparent;
+        color: white;
+        border: 1px solid #64d8ff;
+        padding: 15px 30px;
+        margin: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #64d8ff;
+        color: black;
+    }
+    img {
+    border-radius: 15px;
+    border: 1px solid #64d8ff;
+    box-shadow: 0 0 20px rgba(100, 216, 255, 0.2);
+    max-width: 90%;
+}
+
+h3 {
+    font-size: 26px;
+    color: #64d8ff;
+    margin-top: 40px;
+}
+.card {
+    background: #101c30;
+    border: 1px solid #304d68;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px;
+    width: 350px;
+    max-width: 85%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card:hover {
+    border-color: #64d8ff;
+    box-shadow: 0 0 25px rgba(100, 216, 255, 0.3);
+}
+</style>
+</head>
+<body>
+    <h1>THE SILENT EXPLORERS</h1>
+    <h2>The Machines We Left Behind</h2>
+    <p>Explore the forgotten machines on the Moon and Mars.</p>
+
+    <button onclick="document.getElementById('moon').style.display='block'; document.getElementById('mars').style.display='none'">Explore the Moon</button>
+<button onclick="document.getElementById('mars').style.display='block'; document.getElementById('moon').style.display='none'">Explore Mars</button>
+<section id="moon" style="display: none;">
+    <h2>Explore the Moon</h2>
+    <p>Discover the machines left behind on the lunar surface.</p>
+
+  <div class="card">
+    <h3>Surveyor 3</h3>
+    <img src="surveyor.jpg" alt="Surveyor 3 on the Moon" width="350">
+    <p>Image credit: NASA</p>
+    <p>A robotic spacecraft that landed on the Moon in 1967.</p>
+<details>
+    <summary>Explore Mission</summary>
+    <p>Surveyor 3 landed on the Moon on April 20, 1967. It studied the lunar soil and helped NASA prepare for the Apollo missions.</p>
+    <p>In 1969, Apollo 12 astronauts visited Surveyor 3 and returned some of its components to Earth for scientific analysis.</p>
+    <p>Status: Inactive — remains on the Moon.</p>
+</details>
+  </div>
+
+    <div class="card">
+    <h3>Lunar Roving Vehicle</h3>
+    <img src="rover.jpg" alt="Lunar Roving Vehicle" width="350">
+    <p>Image credit: NASA</p>
+    <p>A vehicle that helped Apollo astronauts explore the Moon.</p>
+<details>
+    <summary>Explore Mission</summary>
+    <p>The Lunar Roving Vehicle was used during Apollo 15, 16, and 17 between 1971 and 1972.</p>
+    <p>It allowed astronauts to travel farther, collect lunar samples, and conduct scientific experiments.</p>
+    <p>Three lunar rovers were left on the Moon after their missions.</p>
+    <p>Status: Inactive — remains on the Moon.</p>
+</details>
+</div>
+</section>
+<section id="mars" style="display: none;">
+    <h2>Explore Mars</h2>
+    <p>Discover the robotic explorers left behind on the Red Planet.</p>
+
+   <div class="card">
+    <h3>Sojourner</h3>
+    <img src="sojourner.jpg" alt="Sojourner Mars rover" width="350">
+    <p>Image credit: NASA</p>
+    <p>NASA's first successful Mars rover, which landed in 1997.</p>
+<details>
+    <summary>Explore Mission</summary>
+    <p>Sojourner landed on Mars on July 4, 1997, as part of NASA's Mars Pathfinder mission.</p>
+    <p>It studied Martian rocks and soil, demonstrating that robotic vehicles could successfully explore Mars.</p>
+    <p>Its success helped pave the way for future Mars rovers, including Spirit, Opportunity, and Curiosity.</p>
+    <p>Status: Inactive — remains on Mars.</p>
+</details>
+</div>
+
+    <div class="card">
+    <h3>Opportunity</h3>
+    <img src="opportunity.jpg" alt="Opportunity rover artist's concept" width="350">
+    <p>Image credit: NASA/JPL-Caltech — Artist's concept</p>
+    <p>A rover that explored Mars for nearly 15 years.</p>
+<details>
+    <summary>Explore Mission</summary>
+    <p>Opportunity landed on Mars on January 25, 2004.</p>
+    <p>Originally designed for a 90-day mission, it explored Mars for nearly 15 years.</p>
+    <p>It discovered evidence that liquid water once existed on Mars, helping scientists understand the planet's ancient environment.</p>
+    <p>In 2018, a massive dust storm caused Opportunity to lose power and communication with Earth.</p>
+    <p>Status: Inactive — remains on Mars.</p>
+</details>
+</div>
+</body>
+</html>
