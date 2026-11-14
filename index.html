@@ -1,146 +1,1889 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>The Silent Explorers</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="An interactive digital museum exploring the legacy of NASA's machines on the Moon and Mars.">
+<meta name="ai-disclosure" content="Website code and educational text developed with assistance from ChatGPT.">
+
+<title>The Silent Explorers</title>
+
 <style>
-    body {
-        background-color: #050b18;
-       background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-        color: white;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding-top: 150px;
-    }
 
-    h1 {
-        font-size: 55px;
-        letter-spacing: 6px;
-    }
+/* =========================
+   GENERAL DESIGN
+========================= */
 
-    h2 {
-        color: #64d8ff;
-        font-size: 28px;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    p {
-        color: #aab8cc;
-        font-size: 18px;
-    }
+:root {
+    --background: #050b18;
+    --panel: #101c30;
+    --cyan: #64d8ff;
+    --text: #aab8cc;
+    --orange: #ffb347;
+}
 
-    button {
-        background: transparent;
-        color: white;
-        border: 1px solid #64d8ff;
-        padding: 15px 30px;
-        margin: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+body {
+    margin: 0;
+    background-color: var(--background);
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
 
-    button:hover {
-        background: #64d8ff;
-        color: black;
-    }
-    img {
-    border-radius: 15px;
-    border: 1px solid #64d8ff;
-    box-shadow: 0 0 20px rgba(100, 216, 255, 0.2);
-    max-width: 90%;
+html {
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-size: clamp(36px, 6vw, 80px);
+    letter-spacing: 7px;
+}
+
+h2 {
+    color: var(--cyan);
+    font-size: 36px;
 }
 
 h3 {
-    font-size: 26px;
-    color: #64d8ff;
-    margin-top: 40px;
+    color: var(--cyan);
+    font-size: 24px;
 }
+
+p {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+button {
+    font-family: inherit;
+}
+
+button, a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(5, 11, 24, 0.96);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid #304d68;
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 8px;
+    transition: 0.3s;
+}
+
+.navbar button:hover,
+.navbar button.active {
+    color: var(--cyan);
+    text-shadow: 0 0 15px var(--cyan);
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page {
+    display: none;
+    min-height: 90vh;
+    padding: 130px 25px 60px;
+    animation: fadeIn 0.7s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   HOMEPAGE
+========================= */
+
+.hero {
+    max-width: 1100px;
+    margin: auto;
+    padding-top: 55px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+
+.hero h1 {
+    margin-bottom: 15px;
+    text-shadow: 0 0 35px rgba(100,216,255,0.25);
+}
+
+.hero h2 {
+    font-weight: normal;
+    font-size: 26px;
+}
+
+.hero-description {
+    max-width: 700px;
+    margin: 25px auto;
+}
+
+.primary-button {
+    background: transparent;
+    color: white;
+    border: 1px solid var(--cyan);
+    padding: 16px 30px;
+    border-radius: 8px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.primary-button:hover {
+    background: var(--cyan);
+    color: var(--background);
+    box-shadow: 0 0 25px rgba(100,216,255,0.4);
+}
+
+.destinations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 50px auto;
+}
+
+.destination {
+    width: 320px;
+    padding: 30px;
+    border: 1px solid #304d68;
+    border-radius: 20px;
+    background: rgba(16,28,48,0.7);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.destination:hover {
+    transform: translateY(-8px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 30px rgba(100,216,255,0.2);
+}
+
+.planet {
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    margin: 15px auto 25px;
+}
+
+.moon-planet {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #eeeeee,
+        #999999 40%,
+        #454545 75%,
+        #151515
+    );
+    box-shadow: 0 0 35px rgba(255,255,255,0.2);
+}
+
+.mars-planet {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #f5ac75,
+        #bc5935 40%,
+        #74321f 75%,
+        #24100b
+    );
+    box-shadow: 0 0 35px rgba(255,100,50,0.25);
+}
+
+.quote {
+    font-size: 22px;
+    color: var(--cyan);
+    font-style: italic;
+    max-width: 800px;
+    margin: 55px auto;
+}
+
+/* =========================
+   MACHINE CARDS
+========================= */
+
+.section-intro {
+    max-width: 750px;
+    margin: 0 auto 40px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
 .card {
-    background: #101c30;
+    background: linear-gradient(145deg, #142238, #0b1424);
     border: 1px solid #304d68;
     border-radius: 20px;
     padding: 25px;
-    margin: 20px;
-    width: 350px;
-    max-width: 85%;
-    display: inline-block;
-    vertical-align: top;
+    width: 420px;
+    max-width: 100%;
+    transition: 0.3s;
 }
 
 .card:hover {
-    border-color: #64d8ff;
-    box-shadow: 0 0 25px rgba(100, 216, 255, 0.3);
+    border-color: var(--cyan);
+    box-shadow: 0 0 30px rgba(100,216,255,0.15);
 }
+
+.card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #304d68;
+}
+
+.status {
+    display: inline-block;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    background: rgba(255,179,71,0.08);
+    border-radius: 30px;
+    padding: 7px 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.credit {
+    font-size: 11px;
+    color: #8290a6;
+    margin-top: 8px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #091323;
+    border: 1px solid #263e58;
+    border-radius: 10px;
+    padding: 15px 8px;
+}
+
+.stat strong {
+    display: block;
+    color: var(--cyan);
+    font-size: 22px;
+    margin-bottom: 7px;
+}
+
+.stat span {
+    color: var(--text);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   INTERACTIVE DETAILS
+========================= */
+
+details {
+    margin-top: 15px;
+    text-align: left;
+}
+
+summary {
+    list-style: none;
+    background: #142b42;
+    border: 1px solid var(--cyan);
+    border-radius: 8px;
+    padding: 14px;
+    color: var(--cyan);
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary:hover {
+    background: var(--cyan);
+    color: var(--background);
+}
+
+details p {
+    font-size: 15px;
+}
+
+details h4 {
+    color: var(--cyan);
+    margin-bottom: 5px;
+}
+
+.source-link {
+    color: var(--cyan);
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.source-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline {
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: left;
+    border-left: 2px solid var(--cyan);
+    padding-left: 35px;
+}
+
+.timeline-event {
+    position: relative;
+    margin-bottom: 35px;
+    padding: 20px 25px;
+    background: #101c30;
+    border: 1px solid #304d68;
+    border-radius: 12px;
+}
+
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -44px;
+    top: 28px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+.year {
+    color: var(--cyan);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.timeline-event h3 {
+    margin: 12px 0;
+}
+
+.timeline-event p {
+    margin-bottom: 0;
+}
+
+/* =========================
+   STORYTELLING
+========================= */
+
+.story {
+    max-width: 850px;
+    margin: 35px auto;
+    background: linear-gradient(145deg, #142238, #091323);
+    border: 1px solid #304d68;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.story img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+.story-content {
+    padding: 30px;
+}
+
+.story-label {
+    color: var(--orange);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.story-text {
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.9;
+}
+
+.story-ending {
+    color: var(--cyan);
+    font-size: 23px;
+    font-weight: bold;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 35px;
+    background: #101c30;
+    border: 1px solid #304d68;
+    border-radius: 20px;
+}
+
+.quiz-progress {
+    height: 7px;
+    background: #26384e;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+#progress-bar {
+    height: 100%;
+    background: var(--cyan);
+    transition: width 0.3s;
+}
+
+.answer {
+    display: block;
+    width: 100%;
+    background: #091323;
+    border: 1px solid #304d68;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 12px 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.answer:hover:not(:disabled) {
+    border-color: var(--cyan);
+}
+
+.answer.correct {
+    background: #153c2b;
+    border-color: #55d68b;
+}
+
+.answer.wrong {
+    background: #48252b;
+    border-color: #ff7474;
+}
+
+.answer:disabled {
+    cursor: default;
+}
+
+#feedback {
+    min-height: 30px;
+}
+
+#next-question {
+    display: none;
+}
+
+/* =========================
+   RESOURCES
+========================= */
+
+.resource {
+    max-width: 750px;
+    background: #101c30;
+    border: 1px solid #304d68;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.resource a {
+    color: var(--cyan);
+    overflow-wrap: anywhere;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #26384e;
+    padding: 30px 20px;
+    background: #050b18;
+}
+
+footer p {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   MOBILE DESIGN
+========================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        gap: 5px;
+        padding: 12px 5px;
+    }
+
+    .navbar button {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+
+    .page {
+        padding-top: 130px;
+    }
+
+    h1 {
+        letter-spacing: 3px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .hero {
+        padding-top: 10px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .story-content {
+        padding: 20px;
+    }
+
+    .quiz-container {
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 </style>
 </head>
+
 <body>
-    <h1>THE SILENT EXPLORERS</h1>
-    <h2>The Machines We Left Behind</h2>
-    <p>Explore the forgotten machines on the Moon and Mars.</p>
 
-    <button onclick="document.getElementById('moon').style.display='block'; document.getElementById('mars').style.display='none'">Explore the Moon</button>
-<button onclick="document.getElementById('mars').style.display='block'; document.getElementById('moon').style.display='none'">Explore Mars</button>
-<section id="moon" style="display: none;">
-    <h2>Explore the Moon</h2>
-    <p>Discover the machines left behind on the lunar surface.</p>
+<!-- =========================
+     NAVIGATION
+========================= -->
 
-  <div class="card">
-    <h3>Surveyor 3</h3>
-    <img src="surveyor.jpg" alt="Surveyor 3 on the Moon" width="350">
-    <p>Image credit: NASA</p>
-    <p>A robotic spacecraft that landed on the Moon in 1967.</p>
-<details>
-    <summary>Explore Mission</summary>
-    <p>Surveyor 3 landed on the Moon on April 20, 1967. It studied the lunar soil and helped NASA prepare for the Apollo missions.</p>
-    <p>In 1969, Apollo 12 astronauts visited Surveyor 3 and returned some of its components to Earth for scientific analysis.</p>
-    <p>Status: Inactive — remains on the Moon.</p>
-</details>
-  </div>
+<nav class="navbar" aria-label="Main navigation">
 
-    <div class="card">
-    <h3>Lunar Roving Vehicle</h3>
-    <img src="rover.jpg" alt="Lunar Roving Vehicle" width="350">
-    <p>Image credit: NASA</p>
-    <p>A vehicle that helped Apollo astronauts explore the Moon.</p>
-<details>
-    <summary>Explore Mission</summary>
-    <p>The Lunar Roving Vehicle was used during Apollo 15, 16, and 17 between 1971 and 1972.</p>
-    <p>It allowed astronauts to travel farther, collect lunar samples, and conduct scientific experiments.</p>
-    <p>Three lunar rovers were left on the Moon after their missions.</p>
-    <p>Status: Inactive — remains on the Moon.</p>
-</details>
-</div>
+    <button class="active" data-page="home"
+    onclick="showSection('home')">HOME</button>
+
+    <button data-page="moon"
+    onclick="showSection('moon')">MOON</button>
+
+    <button data-page="mars"
+    onclick="showSection('mars')">MARS</button>
+
+    <button data-page="timeline"
+    onclick="showSection('timeline')">TIMELINE</button>
+
+    <button data-page="stories"
+    onclick="showSection('stories')">STORIES</button>
+
+    <button data-page="quiz"
+    onclick="showSection('quiz')">QUIZ</button>
+
+    <button data-page="resources"
+    onclick="showSection('resources')">RESOURCES</button>
+
+</nav>
+
+<!-- =========================
+     HOME
+========================= -->
+
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <p class="eyebrow">
+            A DIGITAL SPACE HERITAGE MUSEUM
+        </p>
+
+        <h1>THE SILENT EXPLORERS</h1>
+
+        <h2>The Machines We Left Behind</h2>
+
+        <p class="hero-description">
+            Beyond Earth, silent machines remain on distant worlds.
+            Their missions have ended, but their discoveries continue
+            to shape humanity's understanding of the universe.
+            Explore their journeys, discoveries and enduring legacies.
+        </p>
+
+        <div class="destinations">
+
+            <button class="destination"
+            onclick="showSection('moon')">
+
+                <div class="planet moon-planet"></div>
+
+                <h3>Explore the Moon</h3>
+
+                <p>
+                    Discover the machines that helped humanity
+                    take its first steps on another world.
+                </p>
+
+                <span class="source-link">
+                    ENTER THE LUNAR ARCHIVE
+                </span>
+
+            </button>
+
+            <button class="destination"
+            onclick="showSection('mars')">
+
+                <div class="planet mars-planet"></div>
+
+                <h3>Explore Mars</h3>
+
+                <p>
+                    Meet the robotic pioneers that transformed
+                    our understanding of the Red Planet.
+                </p>
+
+                <span class="source-link">
+                    ENTER THE MARTIAN ARCHIVE
+                </span>
+
+            </button>
+
+        </div>
+
+        <p class="quote">
+            "Machines may stop working, but their discoveries
+            continue to shape science."
+        </p>
+
+        <button class="primary-button"
+        onclick="showSection('timeline')">
+            Discover the Timeline
+        </button>
+
+        <button class="primary-button"
+        onclick="showSection('stories')">
+            Read Their Stories
+        </button>
+
+    </div>
+
 </section>
-<section id="mars" style="display: none;">
-    <h2>Explore Mars</h2>
-    <p>Discover the robotic explorers left behind on the Red Planet.</p>
 
-   <div class="card">
-    <h3>Sojourner</h3>
-    <img src="sojourner.jpg" alt="Sojourner Mars rover" width="350">
-    <p>Image credit: NASA</p>
-    <p>NASA's first successful Mars rover, which landed in 1997.</p>
-<details>
-    <summary>Explore Mission</summary>
-    <p>Sojourner landed on Mars on July 4, 1997, as part of NASA's Mars Pathfinder mission.</p>
-    <p>It studied Martian rocks and soil, demonstrating that robotic vehicles could successfully explore Mars.</p>
-    <p>Its success helped pave the way for future Mars rovers, including Spirit, Opportunity, and Curiosity.</p>
-    <p>Status: Inactive — remains on Mars.</p>
-</details>
-</div>
+<!-- =========================
+     MOON PAGE
+========================= -->
 
-    <div class="card">
-    <h3>Opportunity</h3>
-    <img src="opportunity.jpg" alt="Opportunity rover artist's concept" width="350">
-    <p>Image credit: NASA/JPL-Caltech — Artist's concept</p>
-    <p>A rover that explored Mars for nearly 15 years.</p>
-<details>
-    <summary>Explore Mission</summary>
-    <p>Opportunity landed on Mars on January 25, 2004.</p>
-    <p>Originally designed for a 90-day mission, it explored Mars for nearly 15 years.</p>
-    <p>It discovered evidence that liquid water once existed on Mars, helping scientists understand the planet's ancient environment.</p>
-    <p>In 2018, a massive dust storm caused Opportunity to lose power and communication with Earth.</p>
-    <p>Status: Inactive — remains on Mars.</p>
-</details>
-</div>
+<section id="moon" class="page">
+
+    <p class="eyebrow">DESTINATION 01</p>
+
+    <h2>The Lunar Archive</h2>
+
+    <p class="section-intro">
+        Discover the spacecraft and vehicles that helped humanity
+        understand and explore the lunar surface.
+    </p>
+
+    <div class="cards">
+
+        <!-- SURVEYOR 3 -->
+
+        <article class="card">
+
+            <h3>Surveyor 3</h3>
+
+            <div class="status">MISSION ENDED</div>
+
+            <img src="surveyor.jpg"
+            alt="Surveyor 3 spacecraft on the Moon">
+
+            <p class="credit">Image credit: NASA</p>
+
+            <p>
+                A robotic spacecraft that explored the Moon
+                before humans arrived.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>1967</strong>
+                    <span>LANDING YEAR</span>
+                </div>
+
+                <div class="stat">
+                    <strong>6,315</strong>
+                    <span>IMAGES RETURNED</span>
+                </div>
+
+            </div>
+
+            <details>
+
+                <summary>Explore Mission</summary>
+
+                <h4>Mission History</h4>
+
+                <p>
+                    Surveyor 3 landed on the Moon on April 20,
+                    1967. Its mission helped NASA investigate
+                    the lunar surface before the Apollo landings.
+                </p>
+
+                <h4>Scientific Discoveries</h4>
+
+                <p>
+                    Its mechanical scoop investigated lunar soil,
+                    helping scientists understand the physical
+                    properties of the Moon's surface.
+                </p>
+
+                <h4>What Happened to It?</h4>
+
+                <p>
+                    Apollo 12 astronauts visited Surveyor 3 in
+                    1969 and returned selected components to Earth.
+                    The remaining spacecraft is still on the Moon.
+                </p>
+
+                <h4>Scientific Legacy</h4>
+
+                <p>
+                    Surveyor 3 contributed to preparations for
+                    human lunar exploration and provided valuable
+                    information about the lunar environment.
+                </p>
+
+                <a class="source-link"
+                href="https://science.nasa.gov/mission/surveyor-3/"
+                target="_blank" rel="noopener">
+                    Explore NASA's mission information
+                </a>
+
+            </details>
+
+            <button class="primary-button"
+            onclick="openStory('surveyor-story')">
+                Read Its Story
+            </button>
+
+        </article>
+
+        <!-- LUNAR ROVING VEHICLE -->
+
+        <article class="card">
+
+            <h3>Lunar Roving Vehicle</h3>
+
+            <div class="status">MISSIONS ENDED</div>
+
+            <img src="rover.jpg"
+            alt="Apollo Lunar Roving Vehicle">
+
+            <p class="credit">Image credit: NASA</p>
+
+            <p>
+                An electric vehicle that allowed astronauts
+                to explore farther across the Moon.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>1971</strong>
+                    <span>FIRST USE</span>
+                </div>
+
+                <div class="stat">
+                    <strong>3</strong>
+                    <span>APOLLO MISSIONS</span>
+                </div>
+
+            </div>
+
+            <details>
+
+                <summary>Explore Mission</summary>
+
+                <h4>Mission History</h4>
+
+                <p>
+                    Lunar Roving Vehicles were used during
+                    Apollo 15, Apollo 16 and Apollo 17
+                    between 1971 and 1972.
+                </p>
+
+                <h4>Scientific Contribution</h4>
+
+                <p>
+                    The vehicles allowed astronauts to travel
+                    farther from their landing sites, collect
+                    samples and investigate more geological locations.
+                </p>
+
+                <h4>What Happened to Them?</h4>
+
+                <p>
+                    All three vehicles were left on the Moon
+                    when their crews returned to Earth.
+                </p>
+
+                <h4>Scientific Legacy</h4>
+
+                <p>
+                    The lunar rovers demonstrated the importance
+                    of surface mobility in planetary exploration.
+                    Their legacy continues in modern rover technology.
+                </p>
+
+                <a class="source-link"
+                href="https://www.nasa.gov/"
+                target="_blank" rel="noopener">
+                    Explore NASA's Apollo resources
+                </a>
+
+            </details>
+
+            <button class="primary-button"
+            onclick="openStory('lunar-story')">
+                Read Its Story
+            </button>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     MARS PAGE
+========================= -->
+
+<section id="mars" class="page">
+
+    <p class="eyebrow">DESTINATION 02</p>
+
+    <h2>The Martian Archive</h2>
+
+    <p class="section-intro">
+        Meet the robotic explorers that traveled across
+        the Red Planet and revealed its ancient secrets.
+    </p>
+
+    <div class="cards">
+
+        <!-- SOJOURNER -->
+
+        <article class="card">
+
+            <h3>Sojourner</h3>
+
+            <div class="status">MISSION ENDED</div>
+
+            <img src="sojourner.jpg"
+            alt="Sojourner rover on Mars">
+
+            <p class="credit">Image credit: NASA</p>
+
+            <p>
+                NASA's first successful Mars rover,
+                opening a new era of robotic exploration.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>1997</strong>
+                    <span>LANDING YEAR</span>
+                </div>
+
+                <div class="stat">
+                    <strong>~100 m</strong>
+                    <span>DISTANCE TRAVELED</span>
+                </div>
+
+            </div>
+
+            <details>
+
+                <summary>Explore Mission</summary>
+
+                <h4>Mission History</h4>
+
+                <p>
+                    Sojourner landed on Mars on July 4, 1997,
+                    as part of the Mars Pathfinder mission.
+                </p>
+
+                <h4>Scientific Discoveries</h4>
+
+                <p>
+                    It examined Martian rocks and soil using
+                    scientific instruments that helped identify
+                    their chemical composition.
+                </p>
+
+                <h4>What Happened to It?</h4>
+
+                <p>
+                    Communication with the Pathfinder lander
+                    ended in September 1997. Sojourner remains
+                    on the Martian surface.
+                </p>
+
+                <h4>Scientific Legacy</h4>
+
+                <p>
+                    Sojourner demonstrated that mobile robotic
+                    explorers could successfully operate on Mars,
+                    paving the way for future rover missions.
+                </p>
+
+                <a class="source-link"
+                href="https://science.nasa.gov/mission/mars-pathfinder/"
+                target="_blank" rel="noopener">
+                    Explore NASA's Pathfinder mission
+                </a>
+
+            </details>
+
+            <button class="primary-button"
+            onclick="openStory('sojourner-story')">
+                Read Its Story
+            </button>
+
+        </article>
+
+        <!-- OPPORTUNITY -->
+
+        <article class="card">
+
+            <h3>Opportunity</h3>
+
+            <div class="status">MISSION ENDED</div>
+
+            <img src="opportunity.jpg"
+            alt="Artist's concept of Opportunity rover">
+
+            <p class="credit">
+                NASA/JPL-Caltech — Artist's concept
+            </p>
+
+            <p>
+                A rover designed for a short mission
+                that explored Mars for nearly 15 years.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>90</strong>
+                    <span>PLANNED SOLS</span>
+                </div>
+
+                <div class="stat">
+                    <strong>45.16 km</strong>
+                    <span>DISTANCE TRAVELED</span>
+                </div>
+
+            </div>
+
+            <details>
+
+                <summary>Explore Mission</summary>
+
+                <h4>Mission History</h4>
+
+                <p>
+                    Opportunity landed on Mars on January 25,
+                    2004. Originally designed for 90 Martian
+                    days, it continued exploring for nearly
+                    15 Earth years.
+                </p>
+
+                <h4>Scientific Discoveries</h4>
+
+                <p>
+                    Opportunity discovered minerals and
+                    geological evidence indicating that
+                    liquid water once existed on Mars.
+                </p>
+
+                <h4>What Happened to It?</h4>
+
+                <p>
+                    A planet-wide dust storm in 2018 blocked
+                    sunlight from reaching its solar panels.
+                    NASA lost communication with the rover
+                    and officially ended its mission in
+                    February 2019.
+                </p>
+
+                <h4>Scientific Legacy</h4>
+
+                <p>
+                    Opportunity transformed our understanding
+                    of the history of water on Mars and
+                    helped guide future planetary research.
+                </p>
+
+                <a class="source-link"
+                href="https://science.nasa.gov/mission/mer-opportunity/"
+                target="_blank" rel="noopener">
+                    Explore NASA's Opportunity mission
+                </a>
+
+            </details>
+
+            <button class="primary-button"
+            onclick="openStory('opportunity-story')">
+                Read Its Story
+            </button>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     TIMELINE PAGE
+========================= -->
+
+<section id="timeline" class="page">
+
+    <p class="eyebrow">THE HISTORY OF EXPLORATION</p>
+
+    <h2>Journey Through Time</h2>
+
+    <p class="section-intro">
+        From the first robotic lunar investigations
+        to extraordinary journeys across Mars.
+    </p>
+
+    <div class="timeline">
+
+        <div class="timeline-event">
+            <span class="year">1967</span>
+            <h3>Surveyor 3 Lands</h3>
+            <p>
+                Surveyor 3 investigates the lunar surface
+                and helps prepare for human exploration.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">1969</span>
+            <h3>Apollo 12 Visits Surveyor 3</h3>
+            <p>
+                Astronauts examine the spacecraft and
+                return selected components to Earth.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">1971–1972</span>
+            <h3>Lunar Roving Vehicles</h3>
+            <p>
+                Apollo astronauts explore greater
+                distances across the Moon.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">1997</span>
+            <h3>Sojourner Arrives on Mars</h3>
+            <p>
+                The first successful Mars rover
+                begins a new era of robotic exploration.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">2004</span>
+            <h3>Opportunity Begins Its Journey</h3>
+            <p>
+                A mission planned for 90 sols becomes
+                one of the longest rover missions on Mars.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">2018</span>
+            <h3>The Great Martian Dust Storm</h3>
+            <p>
+                Opportunity sends its final communication
+                as a global dust storm limits solar power.
+            </p>
+        </div>
+
+        <div class="timeline-event">
+            <span class="year">2019</span>
+            <h3>Opportunity's Mission Ends</h3>
+            <p>
+                NASA officially concludes the mission,
+                but its discoveries continue to influence science.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     STORYTELLING PAGE
+========================= -->
+
+<section id="stories" class="page">
+
+    <p class="eyebrow">VOICES FROM DISTANT WORLDS</p>
+
+    <h2>The Last Chapter</h2>
+
+    <p class="section-intro">
+        Every machine has a story. Every mission leaves a legacy.
+        These fictional narratives are inspired by real missions.
+        They are not actual spacecraft transmissions.
+    </p>
+
+    <!-- SURVEYOR STORY -->
+
+    <article class="story" id="surveyor-story">
+
+        <img src="surveyor.jpg"
+        alt="Surveyor 3 on the Moon">
+
+        <div class="story-content">
+
+            <p class="story-label">IMAGINED NARRATIVE</p>
+
+            <h3>Surveyor 3 — Before the Footprints</h3>
+
+            <p class="story-text">
+                I arrived before the astronauts. The Moon was
+                unfamiliar, silent and covered in dust.
+                My task was to investigate the surface and
+                help prepare the way for human explorers.
+            </p>
+
+            <p class="story-text">
+                Two years later, astronauts stood beside me.
+                They carried pieces of my journey back to Earth.
+                I remained beneath the distant stars,
+                a reminder of the discoveries that came before them.
+            </p>
+
+            <p class="story-ending">
+                "I helped prepare the way."
+            </p>
+
+        </div>
+
+    </article>
+
+    <!-- LUNAR ROVER STORY -->
+
+    <article class="story" id="lunar-story">
+
+        <img src="rover.jpg"
+        alt="Lunar Roving Vehicle on the Moon">
+
+        <div class="story-content">
+
+            <p class="story-label">IMAGINED NARRATIVE</p>
+
+            <h3>Lunar Roving Vehicle — Beyond the Horizon</h3>
+
+            <p class="story-text">
+                I carried explorers across a world that
+                humanity had once only observed from Earth.
+                Together, we traveled beyond the landing site,
+                collecting samples and discovering new landscapes.
+            </p>
+
+            <p class="story-text">
+                When the astronauts returned home, I remained.
+                My tracks became part of the history of
+                human exploration.
+            </p>
+
+            <p class="story-ending">
+                "The horizon was only the beginning."
+            </p>
+
+        </div>
+
+    </article>
+
+    <!-- SOJOURNER STORY -->
+
+    <article class="story" id="sojourner-story">
+
+        <img src="sojourner.jpg"
+        alt="Sojourner rover on Mars">
+
+        <div class="story-content">
+
+            <p class="story-label">IMAGINED NARRATIVE</p>
+
+            <h3>Sojourner — Small Machine, Giant Legacy</h3>
+
+            <p class="story-text">
+                I was small, but my mission was extraordinary.
+                I traveled across unfamiliar Martian soil,
+                examining rocks and sending discoveries
+                to a planet millions of kilometers away.
+            </p>
+
+            <p class="story-text">
+                My journey was short compared with the
+                explorers that followed me. Yet every
+                successful movement demonstrated what
+                future machines could achieve.
+            </p>
+
+            <p class="story-ending">
+                "Small steps can begin extraordinary journeys."
+            </p>
+
+        </div>
+
+    </article>
+
+    <!-- OPPORTUNITY STORY -->
+
+    <article class="story" id="opportunity-story">
+
+        <img src="opportunity.jpg"
+        alt="Artist's concept of Opportunity rover">
+
+        <div class="story-content">
+
+            <p class="story-label">IMAGINED NARRATIVE</p>
+
+            <h3>Opportunity — A Journey Beyond Expectations</h3>
+
+            <p class="story-text">
+                I was sent to Mars for 90 sols.
+                Instead, I explored for nearly 15 years.
+                I crossed ancient landscapes and discovered
+                evidence of a world once shaped by water.
+            </p>
+
+            <p class="story-text">
+                When the dust storm arrived, sunlight faded.
+                My journey ended, but the knowledge I shared
+                with Earth continues to guide new explorers.
+            </p>
+
+            <p class="story-ending">
+                "My mission is over. My legacy is not."
+            </p>
+
+        </div>
+
+    </article>
+
+</section>
+
+<!-- =========================
+     QUIZ PAGE
+========================= -->
+
+<section id="quiz" class="page">
+
+    <p class="eyebrow">TEST YOUR KNOWLEDGE</p>
+
+    <h2>Space Explorer Challenge</h2>
+
+    <p>
+        How much have you learned about the silent explorers?
+    </p>
+
+    <div class="quiz-container">
+
+        <div class="quiz-progress">
+            <div id="progress-bar"></div>
+        </div>
+
+        <p id="question-number"></p>
+
+        <h3 id="question"></h3>
+
+        <div id="answers"></div>
+
+        <p id="feedback" aria-live="polite"></p>
+
+        <button id="next-question"
+        class="primary-button"
+        onclick="nextQuestion()">
+            Next Question
+        </button>
+
+        <button class="primary-button"
+        onclick="restartQuiz()">
+            Restart Quiz
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     RESOURCES PAGE
+========================= -->
+
+<section id="resources" class="page">
+
+    <p class="eyebrow">SCIENCE BEHIND THE STORIES</p>
+
+    <h2>NASA Resources & Credits</h2>
+
+    <p class="section-intro">
+        The Silent Explorers connects scientific information
+        with creative storytelling to preserve the legacy
+        of planetary exploration.
+    </p>
+
+    <div class="resource">
+
+        <h3>Surveyor 3</h3>
+
+        <p>
+            Mission history and lunar surface investigations.
+        </p>
+
+        <a href="https://science.nasa.gov/mission/surveyor-3/"
+        target="_blank" rel="noopener">
+            NASA Surveyor 3
+        </a>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Apollo Lunar Exploration</h3>
+
+        <p>
+            Human exploration of the Moon and the use
+            of Lunar Roving Vehicles.
+        </p>
+
+        <a href="https://www.nasa.gov/"
+        target="_blank" rel="noopener">
+            NASA Official Website
+        </a>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Mars Pathfinder & Sojourner</h3>
+
+        <p>
+            NASA's pioneering robotic exploration of Mars.
+        </p>
+
+        <a href="https://science.nasa.gov/mission/mars-pathfinder/"
+        target="_blank" rel="noopener">
+            NASA Mars Pathfinder
+        </a>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Opportunity</h3>
+
+        <p>
+            Mission history, rover exploration and
+            scientific discoveries on Mars.
+        </p>
+
+        <a href="https://science.nasa.gov/mission/mer-opportunity/"
+        target="_blank" rel="noopener">
+            NASA Opportunity
+        </a>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>NASA Planetary Data System</h3>
+
+        <p>
+            An archive of scientific data collected
+            by planetary exploration missions.
+        </p>
+
+        <a href="https://pds.nasa.gov/"
+        target="_blank" rel="noopener">
+            Explore the Planetary Data System
+        </a>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Image & Design Credits</h3>
+
+        <p>
+            Spacecraft imagery: NASA and NASA/JPL-Caltech.
+            Opportunity imagery is an artist's concept.
+        </p>
+
+        <p>
+            Background texture:
+            <a href="https://www.transparenttextures.com/"
+            target="_blank" rel="noopener">
+                Transparent Textures
+            </a>
+        </p>
+
+        <p>
+            This is an independent educational project
+            and is not an official NASA website.
+        </p>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Technology & AI Disclosure</h3>
+
+        <p>
+            This website was developed using HTML, CSS
+            and JavaScript, edited in Visual Studio Code
+            and hosted through GitHub Pages.
+        </p>
+
+        <p>
+            ChatGPT was used to assist with website code,
+            debugging, educational text and fictional
+            storytelling.
+        </p>
+
+        <p>
+            The imagined narratives are creative
+            interpretations inspired by real missions.
+            They are not historical quotations or
+            actual spacecraft messages.
+        </p>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Our Mission</h3>
+
+        <p>
+            We created The Silent Explorers to make
+            space exploration history accessible,
+            engaging and meaningful.
+        </p>
+
+        <p>
+            By connecting science, technology and
+            storytelling, we hope to inspire future
+            generations of explorers.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>THE SILENT EXPLORERS</p>
+
+    <p>Created for NASA Space Apps Challenge 2026</p>
+
+    <p>Preserving the legacy of space exploration.</p>
+
+</footer>
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* PAGE NAVIGATION */
+
+function showSection(id) {
+
+    const pages = document.querySelectorAll('.page');
+
+    pages.forEach(function(page) {
+        page.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+
+    const navButtons = document.querySelectorAll('.navbar button');
+
+    navButtons.forEach(function(button) {
+        button.classList.toggle(
+            'active',
+            button.dataset.page === id
+        );
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'instant'
+    });
+
+}
+
+/* OPEN INDIVIDUAL STORIES */
+
+function openStory(storyId) {
+
+    showSection('stories');
+
+    setTimeout(function() {
+
+        const story = document.getElementById(storyId);
+
+        const position =
+            story.getBoundingClientRect().top
+            + window.scrollY - 120;
+
+        window.scrollTo({
+            top: position,
+            behavior: 'smooth'
+        });
+
+    }, 100);
+
+}
+
+/* QUIZ QUESTIONS */
+
+const questions = [
+
+    {
+        question: "Which spacecraft helped prepare for the Apollo Moon landings?",
+        answers: [
+            "Opportunity",
+            "Surveyor 3",
+            "Sojourner",
+            "Curiosity"
+        ],
+        correct: 1,
+        explanation: "Surveyor 3 investigated the lunar surface before the Apollo missions."
+    },
+
+    {
+        question: "Which Apollo missions used Lunar Roving Vehicles?",
+        answers: [
+            "Apollo 11, 12 and 13",
+            "Apollo 8, 9 and 10",
+            "Apollo 15, 16 and 17",
+            "Apollo 1, 2 and 3"
+        ],
+        correct: 2,
+        explanation: "Lunar Roving Vehicles were used during Apollo 15, 16 and 17."
+    },
+
+    {
+        question: "When did Sojourner land on Mars?",
+        answers: [
+            "1967",
+            "1972",
+            "2004",
+            "1997"
+        ],
+        correct: 3,
+        explanation: "Sojourner arrived on Mars in July 1997."
+    },
+
+    {
+        question: "How long was Opportunity originally designed to operate?",
+        answers: [
+            "90 sols",
+            "15 years",
+            "10 years",
+            "One day"
+        ],
+        correct: 0,
+        explanation: "Opportunity was originally designed for a 90-sol mission."
+    },
+
+    {
+        question: "What important discovery did Opportunity make?",
+        answers: [
+            "Living animals",
+            "Ancient evidence of liquid water",
+            "Forests on Mars",
+            "An underground civilization"
+        ],
+        correct: 1,
+        explanation: "Opportunity discovered geological evidence of ancient liquid water."
+    },
+
+    {
+        question: "What caused Opportunity to lose communication in 2018?",
+        answers: [
+            "A volcanic eruption",
+            "An asteroid impact",
+            "A global dust storm",
+            "An earthquake"
+        ],
+        correct: 2,
+        explanation: "A global dust storm blocked sunlight from reaching its solar panels."
+    },
+
+    {
+        question: "Which mission visited Surveyor 3 in 1969?",
+        answers: [
+            "Apollo 12",
+            "Apollo 17",
+            "Mars Pathfinder",
+            "Voyager 1"
+        ],
+        correct: 0,
+        explanation: "Apollo 12 astronauts visited Surveyor 3 and returned some components to Earth."
+    }
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+/* DISPLAY QUESTION */
+
+function loadQuestion() {
+
+    answered = false;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById('question-number').textContent =
+        "Question " + (currentQuestion + 1)
+        + " of " + questions.length;
+
+    document.getElementById('question').textContent =
+        q.question;
+
+    document.getElementById('feedback').textContent = '';
+
+    document.getElementById('next-question').style.display =
+        'none';
+
+    document.getElementById('progress-bar').style.width =
+        (currentQuestion / questions.length * 100) + '%';
+
+    const answers = document.getElementById('answers');
+
+    answers.innerHTML = '';
+
+    q.answers.forEach(function(answer, index) {
+
+        const button = document.createElement('button');
+
+        button.className = 'answer';
+
+        button.textContent = answer;
+
+        button.onclick = function() {
+            checkAnswer(index);
+        };
+
+        answers.appendChild(button);
+
+    });
+
+}
+
+/* CHECK ANSWER */
+
+function checkAnswer(index) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+
+    const buttons = document.querySelectorAll('.answer');
+
+    buttons.forEach(function(button) {
+        button.disabled = true;
+    });
+
+    buttons[q.correct].classList.add('correct');
+
+    if (index === q.correct) {
+
+        score++;
+
+        document.getElementById('feedback').textContent =
+            "Correct! " + q.explanation;
+
+    } else {
+
+        buttons[index].classList.add('wrong');
+
+        document.getElementById('feedback').textContent =
+            q.explanation;
+
+    }
+
+    document.getElementById('progress-bar').style.width =
+        ((currentQuestion + 1) / questions.length * 100) + '%';
+
+    document.getElementById('next-question').style.display =
+        'inline-block';
+
+}
+
+/* NEXT QUESTION */
+
+function nextQuestion() {
+
+    if (!answered) return;
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        loadQuestion();
+
+    } else {
+
+        showResult();
+
+    }
+
+}
+
+/* QUIZ RESULT */
+
+function showResult() {
+
+    document.getElementById('question-number').textContent =
+        "MISSION COMPLETE";
+
+    document.getElementById('question').textContent =
+        "Your score: " + score + " / " + questions.length;
+
+    document.getElementById('answers').innerHTML = '';
+
+    document.getElementById('next-question').style.display =
+        'none';
+
+    document.getElementById('progress-bar').style.width =
+        '100%';
+
+    let message;
+
+    if (score === questions.length) {
+
+        message = "Outstanding! You are a Space Exploration Expert.";
+
+    } else if (score >= 4) {
+
+        message = "Great work! Keep exploring the universe.";
+
+    } else {
+
+        message = "Every explorer starts somewhere. Explore the archives and try again!";
+
+    }
+
+    document.getElementById('feedback').textContent = message;
+
+}
+
+/* RESTART QUIZ */
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    loadQuestion();
+
+}
+
+/* INITIALIZE */
+
+loadQuestion();
+
+</script>
+
 </body>
 </html>
