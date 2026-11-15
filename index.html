@@ -2,18 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="An interactive digital museum exploring the legacy of NASA's machines on the Moon and Mars.">
-<meta name="ai-disclosure" content="Website code and educational text developed with assistance from ChatGPT.">
+
+<meta name="description" content="An interactive digital museum exploring NASA's machines on the Moon and Mars.">
+
+<meta name="ai-disclosure" content="Website code, educational content, fictional storytelling and accessibility features developed with assistance from ChatGPT.">
 
 <title>The Silent Explorers</title>
 
 <style>
 
-/* =========================
-   GENERAL DESIGN
-========================= */
+/* GENERAL DESIGN */
 
 * {
     box-sizing: border-box;
@@ -27,6 +28,10 @@
     --orange: #ffb347;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background-color: var(--background);
@@ -34,10 +39,6 @@ body {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 h1 {
@@ -55,6 +56,10 @@ h3 {
     font-size: 24px;
 }
 
+h4 {
+    color: var(--cyan);
+}
+
 p {
     color: var(--text);
     font-size: 17px;
@@ -63,57 +68,144 @@ p {
 
 button {
     font-family: inherit;
+    cursor: pointer;
 }
 
-button, a {
-    -webkit-tap-highlight-color: transparent;
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 4px;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+[hidden] {
+    display: none !important;
+}
+
+/* NAVIGATION */
 
 .navbar {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
     width: 100%;
-    background: rgba(5, 11, 24, 0.96);
+    background: rgba(5,11,24,0.96);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid #304d68;
-    padding: 20px;
+    padding: 18px;
     z-index: 1000;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
 }
 
-.navbar button {
+.nav-button {
     background: none;
     border: none;
     color: var(--text);
-    cursor: pointer;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 8px;
     transition: 0.3s;
 }
 
-.navbar button:hover,
-.navbar button.active {
+.nav-button:hover,
+.nav-button.active {
     color: var(--cyan);
     text-shadow: 0 0 15px var(--cyan);
 }
 
-/* =========================
-   PAGES
-========================= */
+.nav-pair {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* SMALL SPEAKER BUTTONS */
+
+.voice-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    width: 27px;
+    height: 27px;
+    margin-left: 8px;
+    padding: 5px;
+    background: transparent;
+    border: 1px solid rgba(100,216,255,0.3);
+    border-radius: 7px;
+    color: var(--cyan);
+    cursor: pointer;
+    transition: 0.25s;
+    flex-shrink: 0;
+    letter-spacing: normal;
+}
+
+.voice-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.voice-button:hover {
+    background: rgba(100,216,255,0.15);
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px rgba(100,216,255,0.2);
+}
+
+.voice-button.speaking {
+    background: var(--cyan);
+    color: var(--background);
+    box-shadow: 0 0 15px rgba(100,216,255,0.4);
+}
+
+.voice-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.nav-pair .voice-button {
+    width: 22px;
+    height: 22px;
+    margin-left: 0;
+    padding: 4px;
+}
+
+.voice-control-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voice-control-row .answer {
+    flex: 1;
+}
+
+.accessibility-note {
+    color: var(--cyan);
+    font-size: 12px;
+    margin: 20px auto;
+}
+
+.voice-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 280px;
+    background: #101c30;
+    border: 1px solid #304d68;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    z-index: 2000;
+}
+
+/* PAGES */
 
 .page {
     display: none;
     min-height: 90vh;
-    padding: 130px 25px 60px;
+    padding: 60px 25px;
     animation: fadeIn 0.7s ease;
 }
 
@@ -133,14 +225,12 @@ button, a {
     }
 }
 
-/* =========================
-   HOMEPAGE
-========================= */
+/* HOMEPAGE */
 
 .hero {
     max-width: 1100px;
     margin: auto;
-    padding-top: 55px;
+    padding-top: 35px;
 }
 
 .eyebrow {
@@ -168,11 +258,10 @@ button, a {
     background: transparent;
     color: white;
     border: 1px solid var(--cyan);
-    padding: 16px 30px;
+    padding: 16px 25px;
     border-radius: 8px;
     margin: 10px;
-    cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
     transition: 0.3s;
 }
 
@@ -191,12 +280,12 @@ button, a {
 }
 
 .destination {
-    width: 320px;
+    width: 340px;
+    max-width: 100%;
     padding: 30px;
     border: 1px solid #304d68;
     border-radius: 20px;
     background: rgba(16,28,48,0.7);
-    cursor: pointer;
     transition: 0.4s;
 }
 
@@ -243,9 +332,7 @@ button, a {
     margin: 55px auto;
 }
 
-/* =========================
-   MACHINE CARDS
-========================= */
+/* MACHINE CARDS */
 
 .section-intro {
     max-width: 750px;
@@ -328,9 +415,13 @@ button, a {
     letter-spacing: 1px;
 }
 
-/* =========================
-   INTERACTIVE DETAILS
-========================= */
+.stat .voice-button {
+    width: 22px;
+    height: 22px;
+    margin-top: 8px;
+}
+
+/* MISSION DETAILS */
 
 details {
     margin-top: 15px;
@@ -358,12 +449,25 @@ summary:hover {
     color: var(--background);
 }
 
+.details-wrapper {
+    position: relative;
+}
+
+.details-wrapper summary {
+    padding-right: 45px;
+}
+
+.details-wrapper > .voice-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 details p {
     font-size: 15px;
 }
 
 details h4 {
-    color: var(--cyan);
     margin-bottom: 5px;
 }
 
@@ -377,9 +481,7 @@ details h4 {
     text-decoration: underline;
 }
 
-/* =========================
-   TIMELINE
-========================= */
+/* TIMELINE */
 
 .timeline {
     max-width: 800px;
@@ -424,9 +526,7 @@ details h4 {
     margin-bottom: 0;
 }
 
-/* =========================
-   STORYTELLING
-========================= */
+/* STORIES */
 
 .story {
     max-width: 850px;
@@ -435,6 +535,7 @@ details h4 {
     border: 1px solid #304d68;
     border-radius: 20px;
     overflow: hidden;
+    scroll-margin-top: 140px;
 }
 
 .story img {
@@ -465,9 +566,7 @@ details h4 {
     font-weight: bold;
 }
 
-/* =========================
-   QUIZ
-========================= */
+/* QUIZ */
 
 .quiz-container {
     max-width: 700px;
@@ -501,7 +600,6 @@ details h4 {
     padding: 16px;
     border-radius: 8px;
     margin: 12px 0;
-    cursor: pointer;
     font-size: 15px;
 }
 
@@ -527,13 +625,7 @@ details h4 {
     min-height: 30px;
 }
 
-#next-question {
-    display: none;
-}
-
-/* =========================
-   RESOURCES
-========================= */
+/* RESOURCES */
 
 .resource {
     max-width: 750px;
@@ -550,9 +642,7 @@ details h4 {
     overflow-wrap: anywhere;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer {
     border-top: 1px solid #26384e;
@@ -565,9 +655,7 @@ footer p {
     letter-spacing: 1px;
 }
 
-/* =========================
-   MOBILE DESIGN
-========================= */
+/* MOBILE DESIGN */
 
 @media (max-width: 600px) {
 
@@ -576,13 +664,13 @@ footer p {
         padding: 12px 5px;
     }
 
-    .navbar button {
+    .nav-button {
         font-size: 10px;
         letter-spacing: 1px;
     }
 
     .page {
-        padding-top: 130px;
+        padding: 35px 15px;
     }
 
     h1 {
@@ -608,53 +696,94 @@ footer p {
     .quiz-container {
         padding: 20px;
     }
+
+    .voice-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .timeline {
+        padding-left: 25px;
+    }
+
+    .timeline-event::before {
+        left: -34px;
+    }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     * {
         animation: none !important;
         transition: none !important;
         scroll-behavior: auto !important;
     }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!-- NAVIGATION -->
 
 <nav class="navbar" aria-label="Main navigation">
 
-    <button class="active" data-page="home"
-    onclick="showSection('home')">HOME</button>
+    <button class="nav-button active"
+    data-page="home"
+    aria-current="page"
+    onclick="showSection('home')">
+        HOME
+    </button>
 
-    <button data-page="moon"
-    onclick="showSection('moon')">MOON</button>
+    <button class="nav-button"
+    data-page="moon"
+    onclick="showSection('moon')">
+        MOON
+    </button>
 
-    <button data-page="mars"
-    onclick="showSection('mars')">MARS</button>
+    <button class="nav-button"
+    data-page="mars"
+    onclick="showSection('mars')">
+        MARS
+    </button>
 
-    <button data-page="timeline"
-    onclick="showSection('timeline')">TIMELINE</button>
+    <button class="nav-button"
+    data-page="timeline"
+    onclick="showSection('timeline')">
+        TIMELINE
+    </button>
 
-    <button data-page="stories"
-    onclick="showSection('stories')">STORIES</button>
+    <button class="nav-button"
+    data-page="stories"
+    onclick="showSection('stories')">
+        STORIES
+    </button>
 
-    <button data-page="quiz"
-    onclick="showSection('quiz')">QUIZ</button>
+    <button class="nav-button"
+    data-page="quiz"
+    onclick="showSection('quiz')">
+        QUIZ
+    </button>
 
-    <button data-page="resources"
-    onclick="showSection('resources')">RESOURCES</button>
+    <button class="nav-button"
+    data-page="resources"
+    onclick="showSection('resources')">
+        RESOURCES
+    </button>
 
 </nav>
 
-<!-- =========================
-     HOME
-========================= -->
+<div id="voice-message"
+class="voice-message"
+role="status"
+aria-live="polite"
+hidden></div>
+
+<!-- HOME PAGE -->
 
 <section id="home" class="page active">
 
@@ -675,10 +804,14 @@ footer p {
             Explore their journeys, discoveries and enduring legacies.
         </p>
 
+        <p class="accessibility-note">
+            Click the speaker icon next to any text to listen.
+            Click again to stop.
+        </p>
+
         <div class="destinations">
 
-            <button class="destination"
-            onclick="showSection('moon')">
+            <div class="destination">
 
                 <div class="planet moon-planet"></div>
 
@@ -689,14 +822,14 @@ footer p {
                     take its first steps on another world.
                 </p>
 
-                <span class="source-link">
+                <button class="primary-button"
+                onclick="showSection('moon')">
                     ENTER THE LUNAR ARCHIVE
-                </span>
+                </button>
 
-            </button>
+            </div>
 
-            <button class="destination"
-            onclick="showSection('mars')">
+            <div class="destination">
 
                 <div class="planet mars-planet"></div>
 
@@ -707,17 +840,18 @@ footer p {
                     our understanding of the Red Planet.
                 </p>
 
-                <span class="source-link">
+                <button class="primary-button"
+                onclick="showSection('mars')">
                     ENTER THE MARTIAN ARCHIVE
-                </span>
+                </button>
 
-            </button>
+            </div>
 
         </div>
 
         <p class="quote">
             "Machines may stop working, but their discoveries
-            continue to shape science."
+            never stop inspiring."
         </p>
 
         <button class="primary-button"
@@ -734,9 +868,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     MOON PAGE
-========================= -->
+<!-- MOON PAGE -->
 
 <section id="moon" class="page">
 
@@ -920,9 +1052,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     MARS PAGE
-========================= -->
+<!-- MARS PAGE -->
 
 <section id="mars" class="page">
 
@@ -1111,9 +1241,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     TIMELINE PAGE
-========================= -->
+<!-- TIMELINE PAGE -->
 
 <section id="timeline" class="page">
 
@@ -1129,75 +1257,101 @@ footer p {
     <div class="timeline">
 
         <div class="timeline-event">
+
             <span class="year">1967</span>
+
             <h3>Surveyor 3 Lands</h3>
+
             <p>
                 Surveyor 3 investigates the lunar surface
                 and helps prepare for human exploration.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">1969</span>
+
             <h3>Apollo 12 Visits Surveyor 3</h3>
+
             <p>
                 Astronauts examine the spacecraft and
                 return selected components to Earth.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">1971–1972</span>
+
             <h3>Lunar Roving Vehicles</h3>
+
             <p>
                 Apollo astronauts explore greater
                 distances across the Moon.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">1997</span>
+
             <h3>Sojourner Arrives on Mars</h3>
+
             <p>
                 The first successful Mars rover
                 begins a new era of robotic exploration.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">2004</span>
+
             <h3>Opportunity Begins Its Journey</h3>
+
             <p>
                 A mission planned for 90 sols becomes
                 one of the longest rover missions on Mars.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">2018</span>
+
             <h3>The Great Martian Dust Storm</h3>
+
             <p>
                 Opportunity sends its final communication
                 as a global dust storm limits solar power.
             </p>
+
         </div>
 
         <div class="timeline-event">
+
             <span class="year">2019</span>
+
             <h3>Opportunity's Mission Ends</h3>
+
             <p>
                 NASA officially concludes the mission,
                 but its discoveries continue to influence science.
             </p>
+
         </div>
 
     </div>
 
 </section>
 
-<!-- =========================
-     STORYTELLING PAGE
-========================= -->
+<!-- STORIES PAGE -->
 
 <section id="stories" class="page">
 
@@ -1351,9 +1505,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     QUIZ PAGE
-========================= -->
+<!-- QUIZ PAGE -->
 
 <section id="quiz" class="page">
 
@@ -1381,7 +1533,8 @@ footer p {
 
         <button id="next-question"
         class="primary-button"
-        onclick="nextQuestion()">
+        onclick="nextQuestion()"
+        hidden>
             Next Question
         </button>
 
@@ -1394,9 +1547,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     RESOURCES PAGE
-========================= -->
+<!-- RESOURCES PAGE -->
 
 <section id="resources" class="page">
 
@@ -1524,8 +1675,8 @@ footer p {
 
         <p>
             ChatGPT was used to assist with website code,
-            debugging, educational text and fictional
-            storytelling.
+            debugging, educational text, fictional storytelling
+            and accessibility features.
         </p>
 
         <p>
@@ -1534,6 +1685,31 @@ footer p {
             They are not historical quotations or
             actual spacecraft messages.
         </p>
+
+    </div>
+
+    <div class="resource">
+
+        <h3>Accessibility</h3>
+
+        <p>
+            To make our website more accessible, we added
+            small speaker buttons next to individual texts.
+            Visitors can listen to the information instead
+            of having to read it.
+        </p>
+
+        <p>
+            The narration uses the browser's Web Speech API
+            and automatically selects an available English voice.
+            These synthetic voices are not original NASA
+            recordings or spacecraft transmissions.
+        </p>
+
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API"
+        target="_blank" rel="noopener">
+            Web Speech API
+        </a>
 
     </div>
 
@@ -1557,9 +1733,7 @@ footer p {
 
 </section>
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -1571,32 +1745,626 @@ footer p {
 
 </footer>
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
+
+/* =================================
+   NATURAL TEXT-TO-SPEECH SYSTEM
+================================= */
+
+const speechSupported =
+    'speechSynthesis' in window &&
+    'SpeechSynthesisUtterance' in window;
+
+let activeVoiceButton = null;
+let activeUtterance = null;
+let messageTimer = null;
+let availableVoices = [];
+
+/* SPEAKER ICON */
+
+const speakerIcon = `
+    <svg viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true">
+
+        <path d="M11 5L6 9H3V15H6L11 19V5Z"></path>
+        <path d="M15 9A4 4 0 0 1 15 15"></path>
+        <path d="M18 6A8 8 0 0 1 18 18"></path>
+
+    </svg>
+`;
+
+const stopIcon = `
+    <svg viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true">
+
+        <rect x="6" y="6"
+        width="12" height="12"
+        rx="2"></rect>
+
+    </svg>
+`;
+
+/* LOAD BROWSER VOICES */
+
+function loadVoices() {
+
+    if (!speechSupported) return;
+
+    availableVoices =
+        window.speechSynthesis.getVoices();
+
+}
+
+/* AUTOMATICALLY CHOOSE A NATURAL VOICE */
+
+function getNaturalVoice() {
+
+    if (!speechSupported) return null;
+
+    loadVoices();
+
+    const englishVoices = availableVoices.filter(
+        voice => voice.lang.toLowerCase().startsWith('en')
+    );
+
+    const preferredVoices = [
+
+        'Ava (Premium)',
+        'Allison (Premium)',
+        'Samantha (Premium)',
+        'Ava (Enhanced)',
+        'Allison (Enhanced)',
+        'Samantha (Enhanced)',
+        'Microsoft Aria Online (Natural)',
+        'Microsoft Jenny Online (Natural)',
+        'Google US English',
+        'Google UK English Female'
+
+    ];
+
+    for (const name of preferredVoices) {
+
+        const voice = englishVoices.find(
+            v => v.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (voice) return voice;
+
+    }
+
+    const highQualityVoice = englishVoices.find(
+        voice =>
+            /premium|enhanced|natural/i.test(voice.name)
+    );
+
+    if (highQualityVoice) {
+
+        return highQualityVoice;
+
+    }
+
+    const fallbackNames = [
+
+        'Ava',
+        'Allison',
+        'Samantha',
+        'Karen',
+        'Daniel',
+        'Alex'
+
+    ];
+
+    for (const name of fallbackNames) {
+
+        const voice = englishVoices.find(
+            v => v.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (voice) return voice;
+
+    }
+
+    return englishVoices.find(
+        voice => voice.default
+    ) || englishVoices[0] || null;
+
+}
+
+/* GET THE TEXT WITHOUT SPEAKER ICONS */
+
+function getReadableText(element) {
+
+    const copy = element.cloneNode(true);
+
+    copy.querySelectorAll('.voice-button')
+        .forEach(button => button.remove());
+
+    return copy.textContent
+        .replace(/\s+/g, ' ')
+        .trim();
+
+}
+
+/* IMPROVE PRONUNCIATION */
+
+function prepareNarration(text) {
+
+    let narration = text
+
+        .replace(/\bLRV\b/g, 'Lunar Roving Vehicle')
+
+        .replace(/\bJPL\b/g, 'J P L')
+
+        .replace(/\bkm\b/g, 'kilometers')
+
+        .replace(/~\s*(\d+)/g, 'approximately $1')
+
+        .replace(/(\d+)\s*m\b/g, '$1 meters')
+
+        .replace(/(\d{4})[–—](\d{4})/g, '$1 to $2')
+
+        .replace(/\s+/g, ' ')
+
+        .trim();
+
+    // Avoid spelling out headings written in capital letters.
+
+    if (
+        narration === narration.toUpperCase() &&
+        /[A-Z]/.test(narration)
+    ) {
+
+        narration = narration.toLowerCase();
+
+    }
+
+    return narration;
+
+}
+
+/* ERROR MESSAGE */
+
+function showVoiceMessage(message) {
+
+    const box =
+        document.getElementById('voice-message');
+
+    clearTimeout(messageTimer);
+
+    box.textContent = message;
+    box.hidden = !message;
+
+    if (message) {
+
+        messageTimer = setTimeout(function() {
+
+            box.hidden = true;
+
+        }, 4000);
+
+    }
+
+}
+
+/* RESET SPEAKER BUTTON */
+
+function resetVoiceButton(button) {
+
+    if (!button) return;
+
+    button.innerHTML = speakerIcon;
+
+    button.classList.remove('speaking');
+
+    button.setAttribute(
+        'aria-pressed',
+        'false'
+    );
+
+    button.setAttribute(
+        'aria-label',
+        button.dataset.originalLabel ||
+        'Listen to this text'
+    );
+
+    button.title = 'Listen to this text';
+
+}
+
+/* STOP CURRENT VOICE */
+
+function stopSpeaking() {
+
+    const previousButton = activeVoiceButton;
+
+    activeVoiceButton = null;
+    activeUtterance = null;
+
+    if (speechSupported) {
+
+        window.speechSynthesis.cancel();
+
+    }
+
+    resetVoiceButton(previousButton);
+
+    showVoiceMessage('');
+
+}
+
+/* READ TEXT */
+
+function speakText(text, button) {
+
+    if (!speechSupported) {
+
+        showVoiceMessage(
+            'Voice narration is unavailable in this browser.'
+        );
+
+        return;
+
+    }
+
+    // Clicking the same speaker stops the narration.
+
+    if (activeVoiceButton === button) {
+
+        stopSpeaking();
+
+        return;
+
+    }
+
+    stopSpeaking();
+
+    const narration = prepareNarration(text);
+
+    if (!narration) return;
+
+    const utterance =
+        new SpeechSynthesisUtterance(narration);
+
+    // Natural, conversational reading speed.
+
+    utterance.lang = 'en-US';
+
+    utterance.rate = 0.98;
+
+    utterance.pitch = 1;
+
+    utterance.volume = 1;
+
+    const voice = getNaturalVoice();
+
+    if (voice) {
+
+        utterance.voice = voice;
+
+        utterance.lang = voice.lang;
+
+    }
+
+    activeVoiceButton = button;
+
+    activeUtterance = utterance;
+
+    button.innerHTML = stopIcon;
+
+    button.classList.add('speaking');
+
+    button.setAttribute(
+        'aria-pressed',
+        'true'
+    );
+
+    button.setAttribute(
+        'aria-label',
+        'Stop narration'
+    );
+
+    button.title = 'Stop narration';
+
+    utterance.onend = function() {
+
+        if (activeUtterance !== utterance) return;
+
+        resetVoiceButton(button);
+
+        activeVoiceButton = null;
+
+        activeUtterance = null;
+
+    };
+
+    utterance.onerror = function(event) {
+
+        if (activeUtterance !== utterance) return;
+
+        resetVoiceButton(button);
+
+        activeVoiceButton = null;
+
+        activeUtterance = null;
+
+        if (
+            event.error !== 'canceled' &&
+            event.error !== 'interrupted'
+        ) {
+
+            showVoiceMessage(
+                'Narration could not play. Please check your browser audio settings.'
+            );
+
+        }
+
+    };
+
+    try {
+
+        window.speechSynthesis.speak(utterance);
+
+    } catch (error) {
+
+        stopSpeaking();
+
+        showVoiceMessage(
+            'Narration could not start.'
+        );
+
+    }
+
+}
+
+/* CREATE INDIVIDUAL SPEAKER BUTTON */
+
+function createVoiceButton(element) {
+
+    const button =
+        document.createElement('button');
+
+    button.type = 'button';
+
+    button.className = 'voice-button';
+
+    button.innerHTML = speakerIcon;
+
+    const text = getReadableText(element);
+
+    const label =
+        'Listen to: ' + text.substring(0, 100);
+
+    button.dataset.originalLabel = label;
+
+    button.setAttribute(
+        'aria-label',
+        label
+    );
+
+    button.setAttribute(
+        'aria-pressed',
+        'false'
+    );
+
+    button.title = 'Listen to this text';
+
+    if (!speechSupported) {
+
+        button.disabled = true;
+
+        button.title =
+            'Voice narration is unavailable';
+
+    }
+
+    button.addEventListener('click', function(event) {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        speakText(
+            getReadableText(element),
+            button
+        );
+
+    });
+
+    return button;
+
+}
+
+/* ADD SPEAKERS NEXT TO INDIVIDUAL TEXTS */
+
+function addVoiceButtons(root = document) {
+
+    const selector = `
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        .status,
+        .year,
+        .stat,
+        .resource a,
+        .source-link,
+        summary
+    `;
+
+    root.querySelectorAll(selector)
+        .forEach(function(element) {
+
+            if (element.closest('.voice-button')) return;
+
+            if (
+                element.dataset.externalVoice === 'true'
+            ) return;
+
+            // Check direct children so a paragraph with a
+            // link can still have its own speaker.
+
+            const existing = Array.from(
+                element.children
+            ).find(child =>
+                child.classList.contains('voice-button') &&
+                child.dataset.inlineVoice === 'true'
+            );
+
+            if (existing) return;
+
+            if (!getReadableText(element)) return;
+
+            const button = createVoiceButton(element);
+
+            if (element.tagName === 'SUMMARY') {
+
+                const details = element.parentElement;
+
+                const wrapper =
+                    document.createElement('div');
+
+                wrapper.className = 'details-wrapper';
+
+                details.parentNode.insertBefore(
+                    wrapper,
+                    details
+                );
+
+                wrapper.appendChild(details);
+
+                wrapper.appendChild(button);
+
+                element.dataset.externalVoice = 'true';
+
+            } else if (element.tagName === 'A') {
+
+                element.insertAdjacentElement(
+                    'afterend',
+                    button
+                );
+
+                element.dataset.externalVoice = 'true';
+
+            } else {
+
+                button.dataset.inlineVoice = 'true';
+
+                element.appendChild(button);
+
+            }
+
+        });
+
+}
+
+/* SPEAKERS NEXT TO NAVIGATION TEXT */
+
+function addNavigationVoices() {
+
+    document.querySelectorAll('.nav-button')
+        .forEach(function(button) {
+
+            const wrapper =
+                document.createElement('span');
+
+            wrapper.className = 'nav-pair';
+
+            button.parentNode.insertBefore(
+                wrapper,
+                button
+            );
+
+            wrapper.appendChild(button);
+
+            wrapper.appendChild(
+                createVoiceButton(button)
+            );
+
+        });
+
+}
+
+/* SPEAKERS NEXT TO ACTION BUTTONS */
+
+function addActionVoices() {
+
+    document.querySelectorAll('.primary-button')
+        .forEach(function(button) {
+
+            if (
+                button.dataset.externalVoice === 'true'
+            ) return;
+
+            const voiceButton =
+                createVoiceButton(button);
+
+            button.insertAdjacentElement(
+                'afterend',
+                voiceButton
+            );
+
+            button.dataset.externalVoice = 'true';
+
+            if (button.id === 'next-question') {
+
+                voiceButton.id = 'next-question-voice';
+
+                voiceButton.hidden = true;
+
+            }
+
+        });
+
+}
 
 /* PAGE NAVIGATION */
 
 function showSection(id) {
 
-    const pages = document.querySelectorAll('.page');
+    stopSpeaking();
 
-    pages.forEach(function(page) {
-        page.classList.remove('active');
-    });
+    document.querySelectorAll('.page')
+        .forEach(function(page) {
 
-    document.getElementById(id).classList.add('active');
+            page.classList.remove('active');
 
-    const navButtons = document.querySelectorAll('.navbar button');
+        });
 
-    navButtons.forEach(function(button) {
-        button.classList.toggle(
-            'active',
-            button.dataset.page === id
-        );
-    });
+    document.getElementById(id)
+        .classList.add('active');
+
+    document.querySelectorAll('.nav-button')
+        .forEach(function(button) {
+
+            const isActive =
+                button.dataset.page === id;
+
+            button.classList.toggle(
+                'active',
+                isActive
+            );
+
+            if (isActive) {
+
+                button.setAttribute(
+                    'aria-current',
+                    'page'
+                );
+
+            } else {
+
+                button.removeAttribute('aria-current');
+
+            }
+
+        });
 
     window.scrollTo({
         top: 0,
@@ -1605,7 +2373,7 @@ function showSection(id) {
 
 }
 
-/* OPEN INDIVIDUAL STORIES */
+/* OPEN INDIVIDUAL STORY */
 
 function openStory(storyId) {
 
@@ -1613,15 +2381,12 @@ function openStory(storyId) {
 
     setTimeout(function() {
 
-        const story = document.getElementById(storyId);
+        const story =
+            document.getElementById(storyId);
 
-        const position =
-            story.getBoundingClientRect().top
-            + window.scrollY - 120;
-
-        window.scrollTo({
-            top: position,
-            behavior: 'smooth'
+        story.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
         });
 
     }, 100);
@@ -1633,137 +2398,219 @@ function openStory(storyId) {
 const questions = [
 
     {
-        question: "Which spacecraft helped prepare for the Apollo Moon landings?",
+        question:
+            "Which spacecraft helped prepare for the Apollo Moon landings?",
+
         answers: [
             "Opportunity",
             "Surveyor 3",
             "Sojourner",
             "Curiosity"
         ],
+
         correct: 1,
-        explanation: "Surveyor 3 investigated the lunar surface before the Apollo missions."
+
+        explanation:
+            "Surveyor 3 investigated the lunar surface before the Apollo missions."
     },
 
     {
-        question: "Which Apollo missions used Lunar Roving Vehicles?",
+        question:
+            "Which Apollo missions used Lunar Roving Vehicles?",
+
         answers: [
             "Apollo 11, 12 and 13",
             "Apollo 8, 9 and 10",
             "Apollo 15, 16 and 17",
             "Apollo 1, 2 and 3"
         ],
+
         correct: 2,
-        explanation: "Lunar Roving Vehicles were used during Apollo 15, 16 and 17."
+
+        explanation:
+            "Lunar Roving Vehicles were used during Apollo 15, 16 and 17."
     },
 
     {
-        question: "When did Sojourner land on Mars?",
+        question:
+            "When did Sojourner land on Mars?",
+
         answers: [
             "1967",
             "1972",
             "2004",
             "1997"
         ],
+
         correct: 3,
-        explanation: "Sojourner arrived on Mars in July 1997."
+
+        explanation:
+            "Sojourner arrived on Mars in July 1997."
     },
 
     {
-        question: "How long was Opportunity originally designed to operate?",
+        question:
+            "How long was Opportunity originally designed to operate?",
+
         answers: [
             "90 sols",
             "15 years",
             "10 years",
             "One day"
         ],
+
         correct: 0,
-        explanation: "Opportunity was originally designed for a 90-sol mission."
+
+        explanation:
+            "Opportunity was originally designed for a 90-sol mission."
     },
 
     {
-        question: "What important discovery did Opportunity make?",
+        question:
+            "What important discovery did Opportunity make?",
+
         answers: [
             "Living animals",
             "Ancient evidence of liquid water",
             "Forests on Mars",
             "An underground civilization"
         ],
+
         correct: 1,
-        explanation: "Opportunity discovered geological evidence of ancient liquid water."
+
+        explanation:
+            "Opportunity discovered geological evidence of ancient liquid water."
     },
 
     {
-        question: "What caused Opportunity to lose communication in 2018?",
+        question:
+            "What caused Opportunity to lose communication in 2018?",
+
         answers: [
             "A volcanic eruption",
             "An asteroid impact",
             "A global dust storm",
             "An earthquake"
         ],
+
         correct: 2,
-        explanation: "A global dust storm blocked sunlight from reaching its solar panels."
+
+        explanation:
+            "A global dust storm blocked sunlight from reaching its solar panels."
     },
 
     {
-        question: "Which mission visited Surveyor 3 in 1969?",
+        question:
+            "Which mission visited Surveyor 3 in 1969?",
+
         answers: [
             "Apollo 12",
             "Apollo 17",
             "Mars Pathfinder",
             "Voyager 1"
         ],
+
         correct: 0,
-        explanation: "Apollo 12 astronauts visited Surveyor 3 and returned some components to Earth."
+
+        explanation:
+            "Apollo 12 astronauts visited Surveyor 3 and returned some components to Earth."
     }
 
 ];
 
 let currentQuestion = 0;
+
 let score = 0;
+
 let answered = false;
 
-/* DISPLAY QUESTION */
+/* SHOW OR HIDE NEXT BUTTON */
+
+function showNextButton(visible) {
+
+    const button =
+        document.getElementById('next-question');
+
+    const voiceButton =
+        document.getElementById('next-question-voice');
+
+    button.hidden = !visible;
+
+    if (voiceButton) {
+
+        voiceButton.hidden = !visible;
+
+    }
+
+}
+
+/* DISPLAY QUIZ QUESTION */
 
 function loadQuestion() {
+
+    stopSpeaking();
 
     answered = false;
 
     const q = questions[currentQuestion];
 
-    document.getElementById('question-number').textContent =
-        "Question " + (currentQuestion + 1)
-        + " of " + questions.length;
+    document.getElementById('question-number')
+        .textContent =
+            "Question " + (currentQuestion + 1) +
+            " of " + questions.length;
 
-    document.getElementById('question').textContent =
-        q.question;
+    document.getElementById('question')
+        .textContent = q.question;
 
-    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback')
+        .textContent = '';
 
-    document.getElementById('next-question').style.display =
-        'none';
+    showNextButton(false);
 
-    document.getElementById('progress-bar').style.width =
-        (currentQuestion / questions.length * 100) + '%';
+    document.getElementById('progress-bar')
+        .style.width =
+            (currentQuestion / questions.length * 100) + '%';
 
-    const answers = document.getElementById('answers');
+    const answers =
+        document.getElementById('answers');
 
     answers.innerHTML = '';
 
     q.answers.forEach(function(answer, index) {
 
-        const button = document.createElement('button');
+        const row =
+            document.createElement('div');
+
+        row.className = 'voice-control-row';
+
+        const button =
+            document.createElement('button');
+
+        button.type = 'button';
 
         button.className = 'answer';
 
         button.textContent = answer;
 
         button.onclick = function() {
+
             checkAnswer(index);
+
         };
 
-        answers.appendChild(button);
+        row.appendChild(button);
+
+        row.appendChild(
+            createVoiceButton(button)
+        );
+
+        answers.appendChild(row);
 
     });
+
+    addVoiceButtons(
+        document.getElementById('quiz')
+    );
 
 }
 
@@ -1773,14 +2620,19 @@ function checkAnswer(index) {
 
     if (answered) return;
 
+    stopSpeaking();
+
     answered = true;
 
     const q = questions[currentQuestion];
 
-    const buttons = document.querySelectorAll('.answer');
+    const buttons =
+        document.querySelectorAll('.answer');
 
     buttons.forEach(function(button) {
+
         button.disabled = true;
+
     });
 
     buttons[q.correct].classList.add('correct');
@@ -1789,23 +2641,30 @@ function checkAnswer(index) {
 
         score++;
 
-        document.getElementById('feedback').textContent =
-            "Correct! " + q.explanation;
+        document.getElementById('feedback')
+            .textContent =
+                "Correct! " + q.explanation;
 
     } else {
 
         buttons[index].classList.add('wrong');
 
-        document.getElementById('feedback').textContent =
-            q.explanation;
+        document.getElementById('feedback')
+            .textContent =
+                "Not quite. " + q.explanation;
 
     }
 
-    document.getElementById('progress-bar').style.width =
-        ((currentQuestion + 1) / questions.length * 100) + '%';
+    document.getElementById('progress-bar')
+        .style.width =
+            ((currentQuestion + 1) /
+            questions.length * 100) + '%';
 
-    document.getElementById('next-question').style.display =
-        'inline-block';
+    showNextButton(true);
+
+    addVoiceButtons(
+        document.getElementById('quiz')
+    );
 
 }
 
@@ -1814,6 +2673,8 @@ function checkAnswer(index) {
 function nextQuestion() {
 
     if (!answered) return;
+
+    stopSpeaking();
 
     currentQuestion++;
 
@@ -1833,43 +2694,57 @@ function nextQuestion() {
 
 function showResult() {
 
-    document.getElementById('question-number').textContent =
-        "MISSION COMPLETE";
+    stopSpeaking();
 
-    document.getElementById('question').textContent =
-        "Your score: " + score + " / " + questions.length;
+    document.getElementById('question-number')
+        .textContent = "MISSION COMPLETE";
 
-    document.getElementById('answers').innerHTML = '';
+    document.getElementById('question')
+        .textContent =
+            "Your score: " +
+            score + " / " + questions.length;
 
-    document.getElementById('next-question').style.display =
-        'none';
+    document.getElementById('answers')
+        .innerHTML = '';
 
-    document.getElementById('progress-bar').style.width =
-        '100%';
+    showNextButton(false);
+
+    document.getElementById('progress-bar')
+        .style.width = '100%';
 
     let message;
 
     if (score === questions.length) {
 
-        message = "Outstanding! You are a Space Exploration Expert.";
+        message =
+            "Outstanding! You are a Space Exploration Expert.";
 
     } else if (score >= 4) {
 
-        message = "Great work! Keep exploring the universe.";
+        message =
+            "Great work! Keep exploring the universe.";
 
     } else {
 
-        message = "Every explorer starts somewhere. Explore the archives and try again!";
+        message =
+            "Every explorer starts somewhere. Explore the archives and try again!";
 
     }
 
-    document.getElementById('feedback').textContent = message;
+    document.getElementById('feedback')
+        .textContent = message;
+
+    addVoiceButtons(
+        document.getElementById('quiz')
+    );
 
 }
 
 /* RESTART QUIZ */
 
 function restartQuiz() {
+
+    stopSpeaking();
 
     currentQuestion = 0;
 
@@ -1879,11 +2754,69 @@ function restartQuiz() {
 
 }
 
-/* INITIALIZE */
+/* STOP VOICE WHEN LEAVING WEBSITE */
+
+window.addEventListener(
+    'pagehide',
+    stopSpeaking
+);
+
+/* ESCAPE KEY STOPS NARRATION */
+
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'Escape') {
+
+        stopSpeaking();
+
+    }
+
+});
+
+/* STOP NARRATION WHEN MISSION DETAILS CLOSE */
+
+document.querySelectorAll('details')
+    .forEach(function(details) {
+
+        details.addEventListener('toggle', function() {
+
+            if (
+                !details.open &&
+                activeVoiceButton &&
+                details.contains(activeVoiceButton)
+            ) {
+
+                stopSpeaking();
+
+            }
+
+        });
+
+    });
+
+/* INITIALIZE WEBSITE */
+
+if (speechSupported) {
+
+    loadVoices();
+
+    window.speechSynthesis.addEventListener(
+        'voiceschanged',
+        loadVoices
+    );
+
+}
+
+addVoiceButtons();
+
+addNavigationVoices();
+
+addActionVoices();
 
 loadQuestion();
 
 </script>
 
 </body>
+
 </html>
